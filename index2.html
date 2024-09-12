@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Charadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #game {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .charade {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game">
+        <h1>Jogo de Charadas</h1>
+        <div id="charade" class="charade"></div>
+        <input type="text" id="answer" placeholder="Sua resposta">
+        <button onclick="checkAnswer()">Enviar Resposta</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Classe que representa uma charada
+        class Charada {
+            constructor(pergunta, resposta) {
+                this.pergunta = pergunta;
+                this.resposta = resposta;
+            }
+
+            // Método para verificar se a resposta está correta
+            verificarResposta(respostaUsuario) {
+                return this.resposta.toLowerCase() === respostaUsuario.toLowerCase();
+            }
+        }
+
+        // Lista de charadas
+        const charadas = [
+            new Charada("O que é, o que é? Quanto mais se tira, maior fica?", "Buraco"),
+            new Charada("O que é, o que é? Tem dentes, mas não morde?", "Pente"),
+            new Charada("O que é, o que é? Não tem pernas, mas corre muito?", "Rio")
+        ];
+
+        let indiceAtual = 0;
+        let pontos = 0;
+
+        // Função para exibir a próxima charada
+        function mostrarCharada() {
+            if (indiceAtual < charadas.length) {
+                document.getElementById("charade").innerHTML = charadas[indiceAtual].pergunta;
+            } else {
+                document.getElementById("charade").innerHTML = "Parabéns! Você terminou o jogo.";
+                document.getElementById("answer").style.display = 'none';
+                document.getElementById("result").innerHTML = `Você acertou ${pontos} de ${charadas.length} charadas.`;
+                document.querySelector("button").style.display = 'none';
+            }
+        }
+
+        // Função para verificar a resposta do jogador
+        function checkAnswer() {
+            let respostaUsuario = document.getElementById("answer").value;
+            if (charadas[indiceAtual].verificarResposta(respostaUsuario)) {
+                document.getElementById("result").innerHTML = "Resposta correta!";
+                pontos++;
+            } else {
+                document.getElementById("result").innerHTML = `Resposta errada! A resposta correta era "${charadas[indiceAtual].resposta}".`;
+            }
+
+            // Limpa o campo de resposta e avança para a próxima charada
+            document.getElementById("answer").value = "";
+            indiceAtual++;
+            setTimeout(() => {
+                document.getElementById("result").innerHTML = "";
+                mostrarCharada();
+            }, 2000);
+        }
+
+        // Iniciar o jogo exibindo a primeira charada
+        mostrarCharada();
+    </script>
+
+</body>
+</html>

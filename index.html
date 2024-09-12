@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Adivinhação de Músicas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="game">
+        <h1>Jogo de Adivinhação de Músicas</h1>
+        <p>Ouça a amostra e tente adivinhar a música.</p>
+        <audio id="music-player" controls hidden></audio> <!-- Player de música -->
+        <button onclick="game.playMusic()">Ouvir Amostra</button>
+        <br><br>
+        <input type="text" id="guess" placeholder="Nome da música">
+        <button onclick="game.adivinhar()">Enviar Palpite</button>
+        <p>Tentativas restantes: <span id="attempts">5</span></p>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
